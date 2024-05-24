@@ -1,0 +1,39 @@
+#include <fstream>
+#include <iostream>
+#include <chrono>
+#include <iomanip>
+// ... 其他包括的头文件 ...
+
+// 假设这是你的width变量
+int width = 1024;
+
+int main()
+{
+    // ... 现有的代码 ...
+
+    // 获取当前时间
+    auto now = std::chrono::system_clock::now();
+    std::time_t now_time = std::chrono::system_clock::to_time_t(now);
+
+    // 创建一个输出文件流对象，并以追加模式打开文件
+    std::ofstream logFile("log.txt", std::ios::app);
+
+    // 检查文件是否成功打开
+    if (logFile.is_open()) 
+    {
+        // 写入日期和时间（精确到分钟）
+        logFile << std::put_time(std::localtime(&now_time), "%Y-%m-%d %H:%M") << " - ";
+
+        // 将width的值写入文件
+        logFile << "Width: " << width << std::endl;
+
+        // 关闭文件
+        logFile.close();
+    }
+    else 
+    {
+        std::cout << "Unable to open file";
+    }
+
+    // ... 现有的代码 ...
+}
